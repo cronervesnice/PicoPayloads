@@ -555,7 +555,7 @@ echo "Email Done"
 	This function will run all the previous functions and assign their outputs to variables
 #>
 
-$intro = "$fullName , it has been a long time my friend"
+$intro = "$fullName , hows your day going"
 
 $RAMwarn = Get-RAM  
 
@@ -567,7 +567,7 @@ $LAST_PASSwarn =  Get-Days_Set
 
 $EMAILwarn = Get-email 
 
-$OUTRO =  "My crime is that of curiosity.... 	and yea curiosity killed the cat....     but satisfaction brought him back.... later $fullName"
+$OUTRO =  "Never plug in random USBs you find.... $fullName"
 
 # echo statement used to track progress while debugging
 echo "Speak Variables set"
